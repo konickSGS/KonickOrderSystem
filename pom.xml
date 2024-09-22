@@ -18,7 +18,7 @@
         <apache.commons.lang.version>3.14.0</apache.commons.lang.version>
         <jackson.core.version>2.14.2</jackson.core.version>
         <jakarta.version>6.0.0</jakarta.version>
-        <postgrepsql.version>42.6.0</postgrepsql.version>
+        <postgrepsql.version>42.7.2</postgrepsql.version>
     </properties>
 
     <dependencies>
@@ -33,13 +33,6 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgrepsql.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
