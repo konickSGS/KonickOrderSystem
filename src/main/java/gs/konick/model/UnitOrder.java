@@ -1,24 +1,15 @@
 package gs.konick.model;
 
-public class UnitOrder {
-    protected int id;
+public class UnitOrder extends Entity {
     protected String name;
 
     // цена в копейках
     protected long price;
 
-    public UnitOrder(int id, String name, long price) {
-        this.id = id;
+    public UnitOrder(long id, String name, long price) {
+        super(id);
         this.name = name;
         this.price = price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

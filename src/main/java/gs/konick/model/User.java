@@ -16,33 +16,24 @@ enum Role {
     }
 }
 
-public class User {
-    private int id;
+public class User extends Entity {
     private String login;
     private String password;
 
-    // Статус: активный или неактивный
+    // Статус: активный или неактивный (если пользователь был удален)
     private String status;
 
     // клиент или менеджер
     private String role;
     private String email;
 
-    public User(int id, String login, String password, String status, String role, String email) {
-        this.id = id;
+    public User(long id, String login, String password, String status, String role, String email) {
+        super(id);
         this.login = login;
         this.password = password;
         this.status = status;
         this.role = role;
         this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLogin() {
