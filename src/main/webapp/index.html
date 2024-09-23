@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница для входа</title>
+</head>
+<body>
+<div>
+    <form action="loginFormCheck" method="post" class="form-container">
+        <h1 class="header">Введите ваши данные:</h1>
+        <div class="form-group">
+            <label for="InputLogin">Login</label>
+            <input type="text" name="login" class="form-control" id="InputLogin" placeholder="Login" required>
+        </div>
+        <div class="form-group">
+            <label for="InputPassword">Password</label>
+            <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Password"
+                   required>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Запомнить меня
+            </label>
+        </div>
+        <button type="submit">Войти</button>
+        <div>
+            <a class="register" href="registration.jsp">Регистрация</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

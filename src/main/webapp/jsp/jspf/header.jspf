@@ -1,0 +1,29 @@
+<nav>
+    <ul>
+        <li class='nav-item'>
+             <a>Профиль</a>
+        </li>
+
+        <li class='nav-item'>
+            <a>Меню</a>
+        </li>
+
+        <c:if test="${user.roleId != 1}">
+        <li class='nav-item'>
+            <a>Мои заказы</a>
+        </li>
+
+        </c:if>
+        <c:if test="${user.roleId != 2}">   x
+        <li class='nav-item'>
+            <a>Все заказы</a>
+        </li>
+
+        </c:if>
+        <c:if test="${user.roleId != 2}">
+        <li class='nav-item'>
+            <a>Пользователи</a>
+        </li>
+        </c:if>
+    </ul>
+</nav>
