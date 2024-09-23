@@ -1,12 +1,12 @@
 package gs.konick.model;
 
-public class UnitOrder extends Entity {
+public class SalesUnit extends Entity {
     protected String name;
 
     // цена в копейках
     protected long price;
 
-    public UnitOrder(long id, String name, long price) {
+    public SalesUnit(long id, String name, long price) {
         super(id);
         this.name = name;
         this.price = price;

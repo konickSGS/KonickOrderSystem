@@ -1,6 +1,6 @@
 package gs.konick.model;
 
-public class Entity {
+public abstract class Entity {
     protected long id;
 
     public Entity() {

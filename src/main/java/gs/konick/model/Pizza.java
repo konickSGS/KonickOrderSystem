@@ -1,6 +1,6 @@
 package gs.konick.model;
 
-public class Pizza extends UnitOrder {
+public class Pizza extends SalesUnit {
     private String pizzaSize;
 
     public Pizza(int id, String name, long price, String pizzaSize) {
@@ -14,5 +14,15 @@ public class Pizza extends UnitOrder {
 
     public void setPizzaSize(String pizzaSize) {
         this.pizzaSize = pizzaSize;
+    }
+
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "id=" + id +
+                ", price=" + price +
+                ", name='" + name + '\'' +
+                ", pizzaSize='" + pizzaSize + '\'' +
+                '}';
     }
 }
