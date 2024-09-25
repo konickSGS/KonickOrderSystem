@@ -24,8 +24,12 @@ public class HashPassword {
     }
 
     public static String hash(char[] password) {
+        return hash(String.valueOf(password));
+    }
+
+    public static String hash(String password) {
         // Преобразуем пароль в байтовый массив и вычисляем хэш-значение
-        byte[] byteHash = md.digest(new String(password).getBytes(StandardCharsets.UTF_8));
+        byte[] byteHash = md.digest(password.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(byteHash);
     }
 
