@@ -13,6 +13,8 @@ CREATE TABLE users (
 	login VARCHAR(32) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
 	role_id INT NOT NULL DEFAULT 1,
+	email VARCHAR(32) NOT NULL UNIQUE,
+	address VARCHAR(32) NOT NULL,
 	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -20,4 +22,4 @@ CREATE TABLE users (
 INSERT INTO roles (name) VALUE ('client');
 INSERT INTO roles (name) VALUE ('manager');
 
-INSERT INTO users (login, password, role_id) VALUE ('admin', 'password', 2);
+INSERT INTO users (login, password, role_id, email, address) VALUE ('admin', 'password', 2, 'admin@admin.ru', 'somewhere');
