@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Реализация ConnectionManager. Использует db.properties.
+ */
 public class ConnectionPool implements ConnectionManager {
     private static ConnectionPool INSTANCE;
 
@@ -18,7 +21,6 @@ public class ConnectionPool implements ConnectionManager {
 
     private ConnectionPool() {
         Properties properties = new Properties();
-        //try (InputStream input = new FileInputStream("db.properties")) {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("db.properties")) {
             properties.load(input);
 
