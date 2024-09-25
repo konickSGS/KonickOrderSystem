@@ -1,17 +1,11 @@
-package gs.konick.db.dao;
+package gs.konick.dao;
 
 import gs.konick.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends Dao<User, Long> {
 
-    /**
-     * Получение пользователя по паролю.
-     * @param login
-     * @param password
-     * @return
-     */
     User getUserByPassword(String login, char[] password);
 
     User getUserByLogin(String login);
