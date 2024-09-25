@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface UserDao extends Dao<User, Long> {
 
-    User getUserByPassword(String login, char[] password);
-
     User getUserByLogin(String login);
 
     List<User> getAllUsers();

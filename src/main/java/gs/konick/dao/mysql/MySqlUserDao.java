@@ -9,13 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlUserDao implements UserDao {
 
     private static UserDao INSTANCE;
 
-    private MySqlUserDao() {}
+    private MySqlUserDao() {
+    }
 
     public static synchronized UserDao getInstance() {
         if (INSTANCE == null) {
@@ -25,17 +27,12 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public User getUserByPassword(String login, char[] password) {
-        return null;
-    }
-
-    @Override
     public User getUserByLogin(String login) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(UserSqlQuery.FIND_USER_BY_LOGIN)) {
-            ps.setString(1, login);
+             PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.FIND_USER_BY_LOGIN)) {
+            preparedStatement.setString(1, login);
 
-            try (ResultSet resultSet = ps.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 // Так как login UNIQUE, то такая строка может быть только одна
                 if (!resultSet.next()) return null;
                 return new User(resultSet);
@@ -47,7 +44,18 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return List.of();
+        List<User> users = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.GET_ALL_USERS);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                users.add(new User(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка getAllUsers", e);
+        }
+
+        return users;
     }
 
     @Override
