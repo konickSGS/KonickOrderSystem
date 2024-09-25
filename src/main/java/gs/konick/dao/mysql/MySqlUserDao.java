@@ -24,19 +24,6 @@ public class MySqlUserDao implements UserDao {
         return INSTANCE;
     }
 
-    private static User makeUser(ResultSet resultSet) throws SQLException {
-        int columnIndex = 0;
-        return new User.Builder()
-                .setId(resultSet.getLong(++columnIndex))
-                .setLogin(resultSet.getString(++columnIndex))
-                .setRole(resultSet.getLong(++columnIndex))
-                .setEmail(resultSet.getString(++columnIndex))
-                .setAddress(resultSet.getString(++columnIndex))
-                .setCreateDate(resultSet.getDate(++columnIndex))
-                .build();
-
-    }
-
     @Override
     public User getUserByPassword(String login, char[] password) {
         return null;
@@ -51,7 +38,7 @@ public class MySqlUserDao implements UserDao {
             try (ResultSet resultSet = ps.executeQuery()) {
                 // Так как login UNIQUE, то такая строка может быть только одна
                 if (!resultSet.next()) return null;
-                return makeUser(resultSet);
+                return new User(resultSet);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка getUserByLogin", e);

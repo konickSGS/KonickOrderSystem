@@ -1,6 +1,8 @@
 package gs.konick.model;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,6 +13,27 @@ public class User implements Serializable {
     private String email;
     private String address;
     private Date createDate;
+
+    private User() {
+    }
+
+    ;
+
+    public User(ResultSet resultSet) {
+        try {
+            this.id = resultSet.getLong(resultSet.findColumn("id"));
+            this.login = resultSet.getString(resultSet.findColumn("login"));
+
+            int roleId = resultSet.getInt(resultSet.findColumn("role_id"));
+            this.role = Role.getRoleById(roleId);
+
+            this.email = resultSet.getString(resultSet.findColumn("email"));
+            this.address = resultSet.getString(resultSet.findColumn("address"));
+            this.createDate = resultSet.getDate(resultSet.findColumn("create_date"));
+        } catch (SQLException e) {
+            throw new RuntimeException("В таблице нет колонки с таким именем", e);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
