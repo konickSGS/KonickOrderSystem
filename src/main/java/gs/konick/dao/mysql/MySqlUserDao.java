@@ -108,7 +108,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public void changePassword(long userId, String password) {
-        String hashPassword = HashPassword.hash(password.toCharArray());
+        String hashPassword = HashPassword.hash(password);
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.CHANGE_PASSWORD)) {
