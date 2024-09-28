@@ -3,9 +3,8 @@ package gs.konick.db;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -19,9 +18,19 @@ public class ConnectionPool implements ConnectionManager {
     private static HikariConfig config = new HikariConfig();
     private static HikariDataSource dataSource;
 
+    /**
+     * Путь к настройкам Database по умолчанию
+     */
+    private static String pathDatabase = "src/main/resources/db.properties";
+
+    public static void setPathDatabase(String path) {
+        pathDatabase = path;
+    }
+
     private ConnectionPool() {
         Properties properties = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("db.properties")) {
+        String path = Paths.get(pathDatabase).toAbsolutePath().toString();
+        try (FileInputStream input = new FileInputStream(path)) {
             properties.load(input);
 
             config.setJdbcUrl(properties.getProperty("jdbcUrl"));
