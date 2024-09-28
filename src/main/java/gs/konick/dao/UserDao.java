@@ -14,7 +14,7 @@ public interface UserDao {
 
     User logIn(String login, String password);
 
-    User signUp(String login, String password, int roleId, String email, String address);
+    User signUp(String login, String password, String email, String address);
 
     void changePassword(long userId, String password);
 
