@@ -67,6 +67,30 @@ public class MySqlUserDaoTest extends BaseDaoTest {
         );
     }
 
+    @DisplayName("Проверка функций getUserById и changeRole")
+    @ParameterizedTest(name = "{displayName}: {arguments}")
+    @MethodSource("provideChangeRole")
+    public void changePassword(long id, int expectedRoleId) {
+        int oldRoleId = userDao.getUserById(id).getRole().getId();
+        userDao.changeRole(id, expectedRoleId);
+        int actualRoleId = userDao.getUserById(id).getRole().getId();
+
+        Assertions.assertEquals(expectedRoleId, actualRoleId);
+
+        // Возвращение старого id
+        userDao.changeRole(id, oldRoleId);
+        int roleIdAfterOldReturn = userDao.getUserById(id).getRole().getId();
+        Assertions.assertEquals(oldRoleId, roleIdAfterOldReturn);
+    }
+
+    public static Stream<Arguments> provideChangeRole() {
+        return Stream.of(
+                Arguments.of(1, 1),
+                Arguments.of(2, 1),
+                Arguments.of(3, 2)
+        );
+    }
+
     @DisplayName("Проверка функций signup, getallusers и delete")
     @ParameterizedTest(name = "{displayName}: {arguments}")
     @MethodSource("provideGetAllUsersAndSignUpAndDelete")
