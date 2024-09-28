@@ -1,38 +1,19 @@
 package gs.konick.model;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Objects;
 
 public class User implements Serializable {
     private long id;
     private String login;
+    private String hashedPassword;
     private Role role;
     private String email;
     private String address;
     private Date createDate;
 
     private User() {
-    }
-
-    ;
-
-    public User(ResultSet resultSet) {
-        try {
-            this.id = resultSet.getLong(resultSet.findColumn("id"));
-            this.login = resultSet.getString(resultSet.findColumn("login"));
-
-            int roleId = resultSet.getInt(resultSet.findColumn("role_id"));
-            this.role = Role.getRoleById(roleId);
-
-            this.email = resultSet.getString(resultSet.findColumn("email"));
-            this.address = resultSet.getString(resultSet.findColumn("address"));
-            this.createDate = resultSet.getDate(resultSet.findColumn("create_date"));
-        } catch (SQLException e) {
-            throw new RuntimeException("В таблице нет колонки с таким именем", e);
-        }
     }
 
     @Override
@@ -53,6 +34,7 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
                 ", role=" + role +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
@@ -73,7 +55,12 @@ public class User implements Serializable {
             return this;
         }
 
-        public Builder setRole(long roleId) {
+        public Builder setHashedPassword(String password) {
+            user.hashedPassword = password;
+            return this;
+        }
+
+        public Builder setRole(int roleId) {
             user.role = Role.getRoleById(roleId);
             return this;
         }
@@ -112,6 +99,14 @@ public class User implements Serializable {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public Role getRole() {
