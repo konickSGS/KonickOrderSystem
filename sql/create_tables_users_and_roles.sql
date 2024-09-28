@@ -20,4 +20,4 @@ CREATE TABLE users (
 INSERT INTO roles (name) VALUE ('client');
 INSERT INTO roles (name) VALUE ('manager');
 
-INSERT INTO users (login, hashed_password, role_id, email, address) VALUE ('admin', 'password', 2, 'admin@admin.ru', 'somewhere');
+INSERT INTO users (login, hashed_password, role_id, email, address) VALUE ('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 2, 'admin@admin.ru', 'somewhere');
