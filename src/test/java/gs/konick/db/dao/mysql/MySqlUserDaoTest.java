@@ -46,6 +46,25 @@ public class MySqlUserDaoTest extends BaseDaoTest {
         }
     }
 
+    @DisplayName("Проверка функций getUserById и changePassword")
+    @ParameterizedTest(name = "{displayName}: {arguments}")
+    @MethodSource("provideChangePassword")
+    public void changePassword(long id, String newPassword) {
+        userDao.changePassword(id, newPassword);
+        String newHashedPassword = userDao.getUserById(id).getHashedPassword();
+
+        String expectedNewHashedPassword = HashPassword.hash(newPassword);
+        Assertions.assertEquals(expectedNewHashedPassword, newHashedPassword, "Пароль не изменился");
+    }
+
+    public static Stream<Arguments> provideChangePassword() {
+        return Stream.of(
+                Arguments.of(1, "newPassword1"),
+                Arguments.of(2, "newPassword2"),
+                Arguments.of(3, "newPassword3")
+        );
+    }
+
     @DisplayName("Проверка функций signup, getallusers и delete")
     @ParameterizedTest(name = "{displayName}: {arguments}")
     @MethodSource("provideGetAllUsersAndSignUpAndDelete")
