@@ -27,6 +27,28 @@ public class MySqlUserDao implements UserDao {
         return INSTANCE;
     }
 
+    /**
+     * Создаем user из текущей строки таблицы
+     *
+     * @param resultSet - текущий resultSet
+     * @return user
+     */
+    private static User makeUser(ResultSet resultSet) {
+        try {
+            return new User.Builder()
+                    .setId(resultSet.getLong(resultSet.findColumn("id")))
+                    .setLogin(resultSet.getString(resultSet.findColumn("login")))
+                    .setHashedPassword(resultSet.getString(resultSet.findColumn("hashed_password")))
+                    .setRole(resultSet.getInt(resultSet.findColumn("role_id")))
+                    .setEmail(resultSet.getString(resultSet.findColumn("email")))
+                    .setAddress(resultSet.getString(resultSet.findColumn("address")))
+                    .setCreateDate(resultSet.getDate(resultSet.findColumn("create_date")))
+                    .build();
+        } catch (SQLException e) {
+            throw new RuntimeException("В таблице нет колонки с таким именем", e);
+        }
+    }
+
     @Override
     public User getUserByLogin(String login) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -36,13 +58,18 @@ public class MySqlUserDao implements UserDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 // Так как login UNIQUE, то такая строка может быть только одна
                 if (!resultSet.next()) return null;
-                return new User(resultSet);
+                return makeUser(resultSet);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Получение всех users из таблицы
+     *
+     * @return list юзеров
+     */
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -50,7 +77,7 @@ public class MySqlUserDao implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.GET_ALL_USERS);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                users.add(new User(resultSet));
+                users.add(makeUser(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,6 +86,12 @@ public class MySqlUserDao implements UserDao {
         return users;
     }
 
+    /**
+     * Получение user из таблицы по id
+     *
+     * @param id - id
+     * @return user или null, если такой строки нет
+     */
     @Override
     public User getUserById(Long id) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -68,7 +101,7 @@ public class MySqlUserDao implements UserDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 // Так как id - Key, то такая строка может быть только одна
                 if (!resultSet.next()) return null;
-                return new User(resultSet);
+                return makeUser(resultSet);
             }
 
         } catch (SQLException e) {
@@ -76,19 +109,53 @@ public class MySqlUserDao implements UserDao {
         }
     }
 
+    /**
+     * Возвращение User по login и password
+     *
+     * @param login    - user login
+     * @param password - user password
+     * @return user(login, password). Если такого user нет, то null
+     */
     @Override
     public User logIn(String login, String password) {
-        return null;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.LOG_IN)) {
+            preparedStatement.setString(1, login);
+            String hashPassword = HashPassword.hash(password);
+            preparedStatement.setString(1, hashPassword);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.next()) return null;
+                return makeUser(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /**
+     * Создание новой строки user
+     */
     @Override
-    public void signUp(String login, String password) {
+    public User signUp(String login, String unhashedPassword, int roleId, String email, String address) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.SIGN_UP)) {
 
-    }
+            String hashPassword = HashPassword.hash(unhashedPassword);
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, hashPassword);
+            preparedStatement.setInt(3, roleId);
+            preparedStatement.setString(4, email);
+            preparedStatement.setString(5, address);
 
-    @Override
-    public User save(User object) {
-        return null;
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new IllegalArgumentException("Не получилось создать нового пользователя");
+            }
+
+            return getUserByLogin(login);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -124,12 +191,15 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public User update(User object) {
-        return null;
-    }
-
-    @Override
-    public Boolean delete(User object) {
-        return null;
+    public void deleteUserById(long id) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.DELETE_USER)) {
+            preparedStatement.setLong(1, id);
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new IllegalArgumentException("Не получилось удалить пользователя");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
