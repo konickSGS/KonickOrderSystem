@@ -50,7 +50,7 @@ public class ConnectionPool implements ConnectionManager {
 
             dataSource = new HikariDataSource(config);
         } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("Нет файла db.properties", e);
+            throw new IllegalArgumentException("Нет файла " + pathDatabase, e);
         } catch (IOException e) {
             throw new IllegalStateException("Не могу подключиться к DB", e);
         }
