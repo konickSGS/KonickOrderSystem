@@ -1,5 +1,3 @@
-USE konickPizza;
-
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 
@@ -11,7 +9,7 @@ CREATE TABLE roles (
 CREATE TABLE users (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	login VARCHAR(32) NOT NULL UNIQUE,
-	password VARCHAR(255) NOT NULL,
+	hashed_password VARCHAR(255) NOT NULL,
 	role_id INT NOT NULL DEFAULT 1,
 	email VARCHAR(32) NOT NULL UNIQUE,
 	address VARCHAR(32) NOT NULL,
@@ -22,4 +20,4 @@ CREATE TABLE users (
 INSERT INTO roles (name) VALUE ('client');
 INSERT INTO roles (name) VALUE ('manager');
 
-INSERT INTO users (login, password, role_id, email, address) VALUE ('admin', 'password', 2, 'admin@admin.ru', 'somewhere');
+INSERT INTO users (login, hashed_password, role_id, email, address) VALUE ('admin', 'password', 2, 'admin@admin.ru', 'somewhere');
