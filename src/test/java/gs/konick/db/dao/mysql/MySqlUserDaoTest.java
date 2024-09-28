@@ -1,5 +1,6 @@
 package gs.konick.db.dao.mysql;
 
+import gs.konick.Main;
 import gs.konick.dao.UserDao;
 import gs.konick.dao.mysql.MySqlUserDao;
 import gs.konick.db.ConnectionPool;
@@ -19,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 /**
@@ -59,9 +61,9 @@ public class MySqlUserDaoTest extends BaseDaoTest {
 
     public static Stream<Arguments> provideChangePassword() {
         return Stream.of(
-                Arguments.of(1, "newPassword1"),
-                Arguments.of(2, "newPassword2"),
-                Arguments.of(3, "newPassword3")
+                Arguments.of(1, "newPassword" + Math.random()),
+                Arguments.of(2, "newPassword" + Math.random()),
+                Arguments.of(3, "newPassword" + Math.random())
         );
     }
 
