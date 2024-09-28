@@ -18,6 +18,8 @@ public class ConnectionPool implements ConnectionManager {
     private static HikariConfig config = new HikariConfig();
     private static HikariDataSource dataSource;
 
+    private static String jdbcDatabaseName;
+
     /**
      * Путь к настройкам Database по умолчанию
      */
@@ -25,16 +27,22 @@ public class ConnectionPool implements ConnectionManager {
 
     public static void setPathDatabase(String path) {
         pathDatabase = path;
+        setConfig();
     }
 
     private ConnectionPool() {
+        setConfig();
+    }
+
+    private static void setConfig() {
         Properties properties = new Properties();
         String path = Paths.get(pathDatabase).toAbsolutePath().toString();
         try (FileInputStream input = new FileInputStream(path)) {
             properties.load(input);
 
-            config.setJdbcUrl(properties.getProperty("jdbcUrl"));
+            jdbcDatabaseName = properties.getProperty("jdbcDatabaseName");
             config.setUsername(properties.getProperty("user"));
+            config.setJdbcUrl(properties.getProperty("jdbcUrl") + jdbcDatabaseName);
             config.setPassword(properties.getProperty("password"));
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -46,6 +54,10 @@ public class ConnectionPool implements ConnectionManager {
         } catch (IOException e) {
             throw new IllegalStateException("Не могу подключиться к DB", e);
         }
+    }
+
+    public static String getJdbcDatabaseName() {
+        return new String(jdbcDatabaseName);
     }
 
     public static ConnectionPool getInstance() {
