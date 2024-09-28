@@ -29,7 +29,6 @@ public class MySqlUserDao implements UserDao {
 
     /**
      * Создаем user из текущей строки таблицы
-     *
      * @param resultSet - текущий resultSet
      * @return user
      */
@@ -67,7 +66,6 @@ public class MySqlUserDao implements UserDao {
 
     /**
      * Получение всех users из таблицы
-     *
      * @return list юзеров
      */
     @Override
@@ -82,13 +80,11 @@ public class MySqlUserDao implements UserDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return users;
     }
 
     /**
      * Получение user из таблицы по id
-     *
      * @param id - id
      * @return user или null, если такой строки нет
      */
@@ -111,7 +107,6 @@ public class MySqlUserDao implements UserDao {
 
     /**
      * Возвращение User по login и password
-     *
      * @param login    - user login
      * @param password - user password
      * @return user(login, password). Если такого user нет, то null
@@ -137,16 +132,16 @@ public class MySqlUserDao implements UserDao {
      * Создание новой строки user
      */
     @Override
-    public User signUp(String login, String unhashedPassword, int roleId, String email, String address) {
+    public User signUp(String login, String unhashedPassword, String email, String address) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UserSqlQuery.SIGN_UP)) {
 
             String hashPassword = HashPassword.hash(unhashedPassword);
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, hashPassword);
-            preparedStatement.setInt(3, roleId);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, address);
+            //preparedStatement.setInt(3, roleId);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, address);
 
             if (preparedStatement.executeUpdate() == 0) {
                 throw new IllegalArgumentException("Не получилось создать нового пользователя");
