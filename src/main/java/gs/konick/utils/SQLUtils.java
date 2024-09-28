@@ -7,7 +7,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Класс, для util методов sql
+ */
 public class SQLUtils {
+    /**
+     * Выполнение нескольких последовательных query из строки
+     * @param connection - connection
+     * @param queries - строка с несколькими запросами (разделенными ;)
+     * @throws SQLException - sqlexception
+     */
     public static void executeSeveralQueries(Connection connection, String queries) throws SQLException {
         Statement statement = connection.createStatement();
         BufferedReader bufferedReader = new BufferedReader(new StringReader(queries));
