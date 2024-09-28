@@ -4,18 +4,13 @@ import gs.konick.model.User;
 
 import java.util.List;
 
-public interface UserDao extends Dao<User, Long> {
+public interface UserDao {
 
     User getUserByLogin(String login);
 
     List<User> getAllUsers();
 
     User getUserById(Long id);
-
-    @Override
-    default User find(Long id) {
-        return getUserById(id);
-    }
 
     User logIn(String login, String password);
 
