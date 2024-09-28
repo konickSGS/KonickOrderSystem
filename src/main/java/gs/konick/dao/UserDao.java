@@ -14,9 +14,11 @@ public interface UserDao {
 
     User logIn(String login, String password);
 
-    void signUp(String login, String password);
+    User signUp(String login, String password, int roleId, String email, String address);
 
     void changePassword(long userId, String password);
 
     void changeRole(long userId, int roleId);
+
+    void deleteUserById(long id);
 }
