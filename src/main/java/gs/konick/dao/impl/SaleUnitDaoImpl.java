@@ -23,7 +23,7 @@ public class SaleUnitDaoImpl implements SaleUnitDao {
         return INSTANCE;
     }
 
-    private static SaleUnit makeSaleUnit(ResultSet resultSet) {
+    public static SaleUnit makeSaleUnit(ResultSet resultSet) {
         try {
             int idColumn = resultSet.findColumn("id");
             int nameColumn = resultSet.findColumn("name");

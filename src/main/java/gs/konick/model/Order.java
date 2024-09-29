@@ -3,14 +3,14 @@ package gs.konick.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Order implements Serializable {
     private long id;
     private long userId;
     private Status status;
-    private int total;
     private Date createDate;
-    private List<SaleUnit> saleUnits;
+    private List<Map<SaleUnit, Integer>> saleUnitsAndCount;
 
     public long getId() {
         return id;
@@ -32,7 +32,7 @@ public class Order implements Serializable {
         return createDate;
     }
 
-    public List<SaleUnit> getSaleUnits() {
+    public List<Map<SaleUnit, Integer>> getSaleUnitsAndCount() {
         return saleUnits;
     }
 
@@ -73,7 +73,7 @@ public class Order implements Serializable {
             return this;
         }
 
-        public Order getOrder() {
+        public Order build() {
             return receipt;
         }
     }

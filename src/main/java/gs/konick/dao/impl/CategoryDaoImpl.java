@@ -26,7 +26,7 @@ public class CategoryDaoImpl implements CategoryDao {
         return INSTANCE;
     }
 
-    private static Category makeCategory(ResultSet resultSet) {
+    public static Category makeCategory(ResultSet resultSet) {
         try {
             int nameColumn = resultSet.findColumn("name");
             int idColumn = resultSet.findColumn("id");

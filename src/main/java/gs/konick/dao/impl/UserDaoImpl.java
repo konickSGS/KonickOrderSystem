@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
      * @param resultSet - текущий resultSet
      * @return user
      */
-    private static User makeUser(ResultSet resultSet) {
+    public static User makeUser(ResultSet resultSet) {
         try {
             int idColumn = resultSet.findColumn("id");
             int loginColumn = resultSet.findColumn("login");

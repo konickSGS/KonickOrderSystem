@@ -4,7 +4,7 @@ import gs.konick.model.Category;
 
 import java.util.List;
 
-public interface CategoryDao {
+public interface CategoryDao extends BaseDao {
     Category getCategoryByName(String name);
 
     Category getCategoryById(long id);
