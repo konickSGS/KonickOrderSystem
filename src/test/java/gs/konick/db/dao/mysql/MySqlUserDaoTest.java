@@ -33,7 +33,7 @@ public class MySqlUserDaoTest extends BaseDaoTest {
      */
     private static final String CREATE_TABLES_USERS_AND_ROLES_PATH = "sql/create_tables_users_and_roles.sql";
     private static final String CREATE_TABLES_USERS_AND_ROLES = Utils.makeStringFromFile(CREATE_TABLES_USERS_AND_ROLES_PATH);
-    private static final String INSERT_USERS_AND_ROLES_PATH = "sql/user_test/insert_into_users.sql";
+    private static final String INSERT_USERS_AND_ROLES_PATH = "sql/insert_into_users.sql";
     private static final String INSERT_USERS_AND_ROLES = Utils.makeStringFromFile(INSERT_USERS_AND_ROLES_PATH);
 
     private static UserDao userDao = MySqlUserDao.getInstance();

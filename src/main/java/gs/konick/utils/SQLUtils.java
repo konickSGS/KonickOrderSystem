@@ -14,7 +14,7 @@ public class SQLUtils {
     /**
      * Выполнение нескольких последовательных query из строки
      * @param connection - connection
-     * @param queries - строка с несколькими запросами (разделенными ;)
+     * @param queries - строка с несколькими запросами (разделенные ;)
      * @throws SQLException - sqlexception
      */
     public static void executeSeveralQueries(Connection connection, String queries) throws SQLException {
