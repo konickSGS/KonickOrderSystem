@@ -55,6 +55,20 @@ public class SaleUnitDaoImpl implements SaleUnitDao {
     }
 
     @Override
+    public SaleUnit getSaleUnitByName(String name) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SaleUnitSqlQuery.FIND_SALEUNIT_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.next()) return null;
+                return makeSaleUnit(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<SaleUnit> getAllSaleUnits() {
         List<SaleUnit> saleUnits = new ArrayList<>();
 
@@ -93,8 +107,8 @@ public class SaleUnitDaoImpl implements SaleUnitDao {
     public void changePrice(long id, long price) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SaleUnitSqlQuery.CHANGE_PRICE)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.setLong(2, price);
+            preparedStatement.setLong(1, price);
+            preparedStatement.setLong(2, id);
 
             if (preparedStatement.executeUpdate() == 0) {
                 throw new IllegalArgumentException("Не получилось изменить цену товара");

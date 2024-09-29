@@ -53,4 +53,14 @@ public class SaleUnit {
             return this;
         }
     }
+
+    @Override
+    public String toString() {
+        return "SaleUnit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", price=" + price +
+                '}';
+    }
 }

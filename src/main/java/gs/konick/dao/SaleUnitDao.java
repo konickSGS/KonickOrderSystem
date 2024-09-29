@@ -7,6 +7,8 @@ import java.util.List;
 public interface SaleUnitDao {
     SaleUnit getSaleUnitById(long id);
 
+    SaleUnit getSaleUnitByName(String name);
+
     List<SaleUnit> getAllSaleUnits();
 
     List<SaleUnit> getFilteredSaleUnitsByCategoryId(long categoryId);

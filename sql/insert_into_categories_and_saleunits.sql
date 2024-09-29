@@ -13,7 +13,7 @@ VALUE ('4 сыра', 1, 50000);
 INSERT INTO saleunits (name, category_id, price)
 VALUE ('Том Ям', 2, 90000);
 INSERT INTO saleunits (name, category_id, price)
-VALUE ('Рамен', 1, 55000);
+VALUE ('Рамен', 2, 55000);
 INSERT INTO saleunits (name, category_id, price)
 VALUE ('Филадельфия', 3, 80000);
 INSERT INTO saleunits (name, category_id, price)
