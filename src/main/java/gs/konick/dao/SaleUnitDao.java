@@ -1,0 +1,19 @@
+package gs.konick.dao;
+
+import gs.konick.model.SaleUnit;
+
+import java.util.List;
+
+public interface SaleUnitDao {
+    SaleUnit getSaleUnitById(long id);
+
+    List<SaleUnit> getAllSaleUnits();
+
+    List<SaleUnit> getFilteredSaleUnitsByCategoryId(long categoryId);
+
+    void changePrice(long id, long price);
+
+    SaleUnit addSaleUnit(String name, long categoryId, long price);
+
+    void deleteSaleUnit(long id);
+}
