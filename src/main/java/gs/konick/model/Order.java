@@ -9,6 +9,7 @@ public class Order implements Serializable {
     private long id;
     private long userId;
     private Status status;
+    private int total;
     private Date createDate;
     private List<Map<SaleUnit, Integer>> saleUnitsAndCount;
 
@@ -33,11 +34,11 @@ public class Order implements Serializable {
     }
 
     public List<Map<SaleUnit, Integer>> getSaleUnitsAndCount() {
-        return saleUnits;
+        return saleUnitsAndCount;
     }
 
-    public void setSaleUnits(List<SaleUnit> saleUnits) {
-        this.saleUnits = saleUnits;
+    public void setSaleUnitsAndCount(List<Map<SaleUnit, Integer>> saleUnitsAndCount) {
+        this.saleUnitsAndCount = saleUnitsAndCount;
     }
 
     public static class Builder {
@@ -65,11 +66,6 @@ public class Order implements Serializable {
 
         public Builder setCreateDate(Date createDate) {
             receipt.createDate = createDate;
-            return this;
-        }
-
-        public Builder setDishes(List<SaleUnit> saleUnits) {
-            receipt.saleUnits = saleUnits;
             return this;
         }
 
