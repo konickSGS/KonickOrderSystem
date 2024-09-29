@@ -46,6 +46,25 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public Order getOrderById(long id) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(OrderSqlQuery.FIND_ORDER_BY_ID)) {
+            preparedStatement.setLong(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.next()) return null;
+                Order order = makeOrder(resultSet);
+                order.setSaleUnitsAndCount(
+                        orderAndSaleUnitDao.getAllSaleUnitsByOrderId(id)
+                );
+                return order;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Order> getUserOrders(long userId) {
         List<Order> orders = new ArrayList<>();
 
@@ -111,6 +130,27 @@ public class OrderDaoImpl implements OrderDao {
                 }
             }
             return orders;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Order addOrder(long userId) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(OrderSqlQuery.ADD_ORDER, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setLong(1, userId);
+
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new IllegalArgumentException("Не получилось создать новый order");
+            }
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            int insertId = 0;
+            if (generatedKeys.next()) {
+                insertId = generatedKeys.getInt(1);
+            }
+            return getOrderById(insertId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
