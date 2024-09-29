@@ -9,7 +9,6 @@ public class SaleUnit {
     private long categoryId;
     // Цена в копейках
     private long price;
-    private String description;
 
     public long getId() {
         return id;
@@ -25,10 +24,6 @@ public class SaleUnit {
 
     public long getPrice() {
         return price;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static class Builder {
@@ -55,11 +50,6 @@ public class SaleUnit {
 
         public Builder setPrice(long price) {
             saleUnit.price = price;
-            return this;
-        }
-
-        public Builder setDescription(String description) {
-            saleUnit.description = description;
             return this;
         }
     }
