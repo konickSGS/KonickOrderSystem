@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface OrderDao extends BaseDao {
 
+    Order getOrderById(long id);
+
     /**
      * Получение заказов конкретного юзера
      */
@@ -17,6 +19,8 @@ public interface OrderDao extends BaseDao {
      * Получение заказов конкретного статуса
      */
     List<Order> getFilteredOrdersByStatus(long statusId);
+
+    Order addOrder(long userId);
 
     void changeStatus(long id, long statusId);
 
