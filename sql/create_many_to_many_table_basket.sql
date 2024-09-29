@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS basket_and_saleunit;
+DROP TABLE IF EXISTS basket;
 
-CREATE TABLE basket_and_saleunit (
+CREATE TABLE basket (
 	user_id INT NOT NULL,
     saleunit_id INT NOT NULL UNIQUE,
     count INT NOT NULL DEFAULT 1,
