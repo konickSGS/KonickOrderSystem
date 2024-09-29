@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS order_and_saleunit;
 
 CREATE TABLE order_and_saleunit (
 	order_id INT NOT NULL,

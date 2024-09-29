@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS basket;
 
 CREATE TABLE basket (
 	user_id INT NOT NULL,
