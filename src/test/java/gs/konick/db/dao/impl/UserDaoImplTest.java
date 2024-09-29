@@ -1,8 +1,7 @@
-package gs.konick.db.dao.mysql;
+package gs.konick.db.dao.impl;
 
-import gs.konick.Main;
 import gs.konick.dao.UserDao;
-import gs.konick.dao.mysql.MySqlUserDao;
+import gs.konick.dao.impl.UserDaoImpl;
 import gs.konick.db.ConnectionPool;
 import gs.konick.db.dao.BaseDaoTest;
 import gs.konick.model.User;
@@ -17,16 +16,14 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Stream;
 
 /**
- * Класс для тестирования MySqlUserDao. Работает с тестовой базой данных
+ * Класс для тестирования UserDaoImpl. Работает с тестовой базой данных
  */
-public class MySqlUserDaoTest extends BaseDaoTest {
+public class UserDaoImplTest extends BaseDaoTest {
 
     /**
      * SQL скрипты и пути к ним, которые создают таблицы и добавляют их содержимое
@@ -36,7 +33,7 @@ public class MySqlUserDaoTest extends BaseDaoTest {
     private static final String INSERT_USERS_AND_ROLES_PATH = "sql/insert_into_users.sql";
     private static final String INSERT_USERS_AND_ROLES = Utils.makeStringFromFile(INSERT_USERS_AND_ROLES_PATH);
 
-    private static UserDao userDao = MySqlUserDao.getInstance();
+    private static UserDao userDao = UserDaoImpl.getInstance();
 
     @BeforeAll
     static void createTablesAndInsertValues() {

@@ -1,4 +1,4 @@
-package gs.konick.dao.mysql;
+package gs.konick.dao.impl;
 
 import gs.konick.db.ConnectionPool;
 import gs.konick.dao.UserDao;
@@ -13,16 +13,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySqlUserDao implements UserDao {
+public class UserDaoImpl implements UserDao {
 
     private static UserDao INSTANCE;
 
-    private MySqlUserDao() {
+    private UserDaoImpl() {
     }
 
     public static synchronized UserDao getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new MySqlUserDao();
+            INSTANCE = new UserDaoImpl();
         }
         return INSTANCE;
     }
@@ -34,14 +34,21 @@ public class MySqlUserDao implements UserDao {
      */
     private static User makeUser(ResultSet resultSet) {
         try {
+            int idColumn = resultSet.findColumn("id");
+            int loginColumn = resultSet.findColumn("login");
+            int hashedPasswordColumn = resultSet.findColumn("hashed_password");
+            int roleColumn = resultSet.findColumn("role_id");
+            int emailColumn = resultSet.findColumn("email");
+            int addressColumn = resultSet.findColumn("address");
+            int dateColumn = resultSet.findColumn("create_date");
             return new User.Builder()
-                    .setId(resultSet.getLong(resultSet.findColumn("id")))
-                    .setLogin(resultSet.getString(resultSet.findColumn("login")))
-                    .setHashedPassword(resultSet.getString(resultSet.findColumn("hashed_password")))
-                    .setRole(resultSet.getInt(resultSet.findColumn("role_id")))
-                    .setEmail(resultSet.getString(resultSet.findColumn("email")))
-                    .setAddress(resultSet.getString(resultSet.findColumn("address")))
-                    .setCreateDate(resultSet.getDate(resultSet.findColumn("create_date")))
+                    .setId(resultSet.getLong(idColumn))
+                    .setLogin(resultSet.getString(loginColumn))
+                    .setHashedPassword(resultSet.getString(hashedPasswordColumn))
+                    .setRole(resultSet.getInt(roleColumn))
+                    .setEmail(resultSet.getString(emailColumn))
+                    .setAddress(resultSet.getString(addressColumn))
+                    .setCreateDate(resultSet.getDate(dateColumn))
                     .build();
         } catch (SQLException e) {
             throw new RuntimeException("В таблице нет колонки с таким именем", e);
