@@ -10,7 +10,5 @@ public class OrderSqlQuery extends SqlQuery {
     public static final String GET_FILTERED_ORDERS_BY_STATUS = "SELECT * FROM " + tableName + " WHERE status_id = ?;";
     public static final String CHANGE_STATUS                 = "UPDATE " + tableName + " SET status_id = ? WHERE id = ?;";
     public static final String ADD_ORDER                     = "INSERT INTO " + tableName + " (user_id) VALUES (?)";
-    public static final String ADD_ORDER_HAS_SALEUNIT        = "INSERT INTO " + manyToManyTable1 + " (order_id, saleunit_id, count, price) VALUES (?, ?, ?, ?)";
-    public static final String REMOVE_SALEUNIT_FROM_CART     = "DELETE FROM " + manyToManyTable2 + " WHERE user_id = ? AND saleunit_id = ?";
     public static final String DELETE_ORDER                  = "DELETE FROM " + tableName + " WHERE id = ?;";
 }
