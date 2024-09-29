@@ -18,7 +18,7 @@ public class Category implements Serializable {
     public static class Builder {
         Category category = new Category();
 
-        public Category getCategory() {
+        public Category build() {
             return category;
         }
 
