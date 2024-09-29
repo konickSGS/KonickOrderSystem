@@ -71,10 +71,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    /**
-     * Получение всех users из таблицы
-     * @return list юзеров
-     */
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -90,11 +86,6 @@ public class UserDaoImpl implements UserDao {
         return users;
     }
 
-    /**
-     * Получение user из таблицы по id
-     * @param id - id
-     * @return user или null, если такой строки нет
-     */
     @Override
     public User getUserById(Long id) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -112,12 +103,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    /**
-     * Возвращение User по login и password
-     * @param login    - user login
-     * @param password - user password
-     * @return user(login, password). Если такого user нет, то null
-     */
     @Override
     public User logIn(String login, String password) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -135,9 +120,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    /**
-     * Создание новой строки user
-     */
     @Override
     public User signUp(String login, String unhashedPassword, String email, String address) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
