@@ -29,6 +29,10 @@ public interface UserDao extends BaseDao {
      */
     User logIn(String login, String password);
 
+    default User logIn(String login, char[] password) {
+        return logIn(login, String.valueOf(password));
+    }
+
     /**
      * Создание новой строки user
      */
