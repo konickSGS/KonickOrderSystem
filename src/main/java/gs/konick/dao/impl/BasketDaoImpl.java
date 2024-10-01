@@ -1,6 +1,7 @@
 package gs.konick.dao.impl;
 
 import gs.konick.dao.BasketDao;
+import gs.konick.dao.DaoPool;
 import gs.konick.db.ConnectionPool;
 import gs.konick.model.SaleUnit;
 import gs.konick.sql.BasketSqlQuery;
@@ -53,7 +54,7 @@ public class BasketDaoImpl implements BasketDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     long saleUnitId = resultSet.getLong("saleunit_id");
-                    SaleUnit saleUnit = saleUnitDao.getSaleUnitById(saleUnitId);
+                    SaleUnit saleUnit = DaoPool.saleUnitDao.getSaleUnitById(saleUnitId);
                     int count = resultSet.getInt("count");
                     basket.put(saleUnit, count);
                 }
@@ -71,12 +72,12 @@ public class BasketDaoImpl implements BasketDao {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             savepoint = connection.setSavepoint();
-            long orderId = orderDao.addOrder(userId).getId();
+            long orderId = DaoPool.orderDao.addOrder(userId).getId();
 
             for (var basketUnit : basket.entrySet()) {
                 long saleUnitId = basketUnit.getKey().getId();
                 int count = basketUnit.getValue();
-                orderAndSaleUnitDao.addOrderAndSaleUnit(orderId, saleUnitId, count);
+                DaoPool.orderAndSaleUnitDao.addOrderAndSaleUnit(orderId, saleUnitId, count);
             }
 
         } catch (SQLException e) {

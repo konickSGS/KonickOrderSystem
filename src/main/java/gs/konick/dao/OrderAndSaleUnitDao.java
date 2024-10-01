@@ -5,7 +5,7 @@ import gs.konick.model.SaleUnit;
 import java.util.List;
 import java.util.Map;
 
-public interface OrderAndSaleUnitDao extends BaseDao {
+public interface OrderAndSaleUnitDao {
 
     List<Map<SaleUnit, Integer>> getAllSaleUnitsByOrderId(long orderId);
 

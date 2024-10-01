@@ -4,7 +4,7 @@ import gs.konick.model.SaleUnit;
 
 import java.util.Map;
 
-public interface BasketDao extends BaseDao {
+public interface BasketDao {
     /**
      * Добавление заказа в корзину
      */

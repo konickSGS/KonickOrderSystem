@@ -4,7 +4,7 @@ import gs.konick.model.User;
 
 import java.util.List;
 
-public interface UserDao extends BaseDao {
+public interface UserDao {
 
     User getUserByLogin(String login);
 

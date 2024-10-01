@@ -4,7 +4,7 @@ import gs.konick.model.SaleUnit;
 
 import java.util.List;
 
-public interface SaleUnitDao extends BaseDao {
+public interface SaleUnitDao {
     SaleUnit getSaleUnitById(long id);
 
     SaleUnit getSaleUnitByName(String name);

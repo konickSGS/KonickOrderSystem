@@ -1,5 +1,6 @@
 package gs.konick.dao.impl;
 
+import gs.konick.dao.DaoPool;
 import gs.konick.dao.OrderAndSaleUnitDao;
 import gs.konick.db.ConnectionPool;
 import gs.konick.model.SaleUnit;
@@ -38,7 +39,7 @@ public class OrderAndSaleUnitDaoImpl implements OrderAndSaleUnitDao {
                 while (resultSet.next()) {
                     long saleUnitId = resultSet.getLong("saleunit_id");
                     int count = resultSet.getInt("count");
-                    SaleUnit saleUnit = saleUnitDao.getSaleUnitById(saleUnitId);
+                    SaleUnit saleUnit = DaoPool.saleUnitDao.getSaleUnitById(saleUnitId);
                     saleUnitAndCount.add(Map.of(saleUnit, count));
                 }
             }

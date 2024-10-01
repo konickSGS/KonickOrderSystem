@@ -1,5 +1,6 @@
 package gs.konick.dao.impl;
 
+import gs.konick.dao.DaoPool;
 import gs.konick.dao.OrderDao;
 import gs.konick.db.ConnectionPool;
 import gs.konick.model.Order;
@@ -55,7 +56,7 @@ public class OrderDaoImpl implements OrderDao {
                 if (!resultSet.next()) return null;
                 Order order = makeOrder(resultSet);
                 order.setSaleUnitsAndCount(
-                        orderAndSaleUnitDao.getAllSaleUnitsByOrderId(id)
+                        DaoPool.orderAndSaleUnitDao.getAllSaleUnitsByOrderId(id)
                 );
                 return order;
             }
@@ -78,7 +79,7 @@ public class OrderDaoImpl implements OrderDao {
                     long orderId = order.getId();
                     // Добавление всех saleunits по данной orderId
                     order.setSaleUnitsAndCount(
-                            orderAndSaleUnitDao.getAllSaleUnitsByOrderId(orderId)
+                            DaoPool.orderAndSaleUnitDao.getAllSaleUnitsByOrderId(orderId)
                     );
                     orders.add(order);
                 }
@@ -100,7 +101,7 @@ public class OrderDaoImpl implements OrderDao {
                 long orderId = order.getId();
                 // Добавление всех saleunits по данной orderId
                 order.setSaleUnitsAndCount(
-                        orderAndSaleUnitDao.getAllSaleUnitsByOrderId(orderId)
+                        DaoPool.orderAndSaleUnitDao.getAllSaleUnitsByOrderId(orderId)
                 );
                 orders.add(order);
             }
@@ -124,7 +125,7 @@ public class OrderDaoImpl implements OrderDao {
                     long orderId = order.getId();
                     // Добавление всех saleunits по данной orderId
                     order.setSaleUnitsAndCount(
-                            orderAndSaleUnitDao.getAllSaleUnitsByOrderId(orderId)
+                            DaoPool.orderAndSaleUnitDao.getAllSaleUnitsByOrderId(orderId)
                     );
                     orders.add(order);
                 }

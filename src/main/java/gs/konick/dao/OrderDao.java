@@ -4,7 +4,7 @@ import gs.konick.model.Order;
 
 import java.util.List;
 
-public interface OrderDao extends BaseDao {
+public interface OrderDao {
 
     Order getOrderById(long id);
 
